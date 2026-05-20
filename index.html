@@ -170,17 +170,17 @@
             text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
         }
 
-        /* ИЗМЕНЕНИЕ: Увеличена дата и сделан жирный шрифт */
+        /* Увеличенная и жирная дата */
         .hero-date {
             font-family: 'Montserrat', sans-serif;
-            font-size: 26px; /* Было 16px */
+            font-size: 26px;
             letter-spacing: 6px;
-            font-weight: 500; /* Было 200 */
+            font-weight: 500;
             color: #ffffff;
             text-shadow: 0.5px 0.5px 3px rgba(0,0,0,0.4);
         }
 
-        /* ========== КНОПКА МУЗЫКИ (исправленная) ========== */
+        /* ========== КНОПКА МУЗЫКИ (ИСПРАВЛЕНО) ========== */
         .music-control-wrapper {
             display: flex;
             flex-direction: column;
@@ -191,9 +191,9 @@
         }
 
         .music-toggle {
-            background: #1a1a1a;
+            background: #1a1a1a; /* Черный фон */
             border: none;
-            color: #ffffff;
+            color: #ffffff; /* Белый цвет по умолчанию (влияет на currentColor) */
             width: 48px;
             height: 48px;
             border-radius: 50%;
@@ -205,8 +205,9 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            /* Убираем анимацию вращения, если она была */
             animation: none;
+            /* Гарантируем, что содержимое не вылезает */
+            padding: 0;
         }
 
         .music-toggle::before {
@@ -218,7 +219,7 @@
             height: 100%;
             background: var(--gold);
             transition: left 0.4s ease;
-            z-index: -1;
+            z-index: 1; /* Перекрывает фон */
             border-radius: 50%;
         }
 
@@ -227,7 +228,7 @@
         }
 
         .music-toggle:hover {
-            color: #1a1a1a;
+            color: #1a1a1a; /* Иконки станут черными при наведении */
             box-shadow: 0 0 20px rgba(26, 26, 26, 0.3);
         }
 
@@ -236,10 +237,13 @@
             height: 22px;
             transition: transform 0.3s ease;
             position: absolute;
-            color: #ffffff;
+            /* Принудительно задаем цвет заливки и обводки */
+            color: #ffffff; 
             fill: #ffffff;
+            z-index: 2; /* Иконка над псевдоэлементом */
         }
 
+        /* При наведении меняем цвет иконок на черный */
         .music-toggle:hover svg {
             color: #1a1a1a;
             fill: #1a1a1a;
@@ -1275,7 +1279,7 @@
         /* ========== АДАПТИВНОСТЬ ========== */
         @media (max-width: 768px) {
             .hero-info { bottom: 50px; left: 30px; }
-            .hero-date { font-size: 22px; } /* Чуть меньше на планшетах */
+            .hero-date { font-size: 22px; }
             .details { padding: 60px 25px; }
             .timeline-section { padding: 80px 25px; }
             .location-section { padding: 80px 25px; }
@@ -1295,7 +1299,7 @@
         @media (max-width: 480px) {
             .hero-info { bottom: 40px; left: 20px; }
             .hero-names { font-size: 20px; letter-spacing: 2px; }
-            .hero-date { font-size: 18px; letter-spacing: 4px; } /* Адаптив для телефонов */
+            .hero-date { font-size: 18px; letter-spacing: 4px; }
             .details { padding: 50px 18px; }
             .timeline-section { padding: 60px 15px; }
             .timeline-container::before { left: 24px; }
@@ -1342,19 +1346,19 @@
         <section class="hero">
             <div class="hero-info">
                 <h1 class="hero-names">Дмитрий & Юлия</h1>
-                <!-- Дата стала крупнее и жирнее -->
                 <div class="hero-date">19.07.2026</div>
             </div>
         </section>
 
         <div class="music-control-wrapper">
+            <!-- Плеер сразу в состоянии паузы, чтобы отображалась иконка Play -->
             <button id="music-toggle" class="music-toggle paused" title="Воспроизвести / Пауза">
-                <!-- Иконка паузы (по умолчанию скрыта, т.к. плеер на паузе) -->
+                <!-- Иконка паузы (две полоски) - белая на черном -->
                 <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor">
                     <rect x="5" y="4" width="4" height="16" rx="1"/>
                     <rect x="15" y="4" width="4" height="16" rx="1"/>
                 </svg>
-                <!-- Иконка воспроизведения (по умолчанию видна) -->
+                <!-- Иконка play (треугольник) - белая на черном -->
                 <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
                     <polygon points="6,3 20,12 6,21"/>
                 </svg>
@@ -1492,7 +1496,7 @@
                 setTimeout(() => { particlesContainer.classList.remove('active'); }, 4500);
             }
 
-            // ИСПРАВЛЕНИЕ ПЛЕЕРА: убрана анимация загрузки, иконки переключаются мгновенно
+            // Функция смены иконок плеера (черный фон, белые иконки)
             function updateMusicUI() {
                 if (bgMusic.paused) {
                     musicToggle.classList.add('paused');
