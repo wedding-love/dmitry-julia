@@ -170,16 +170,17 @@
             text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
         }
 
+        /* ИЗМЕНЕНИЕ: Увеличена дата и сделан жирный шрифт */
         .hero-date {
             font-family: 'Montserrat', sans-serif;
-            font-size: 16px;
+            font-size: 26px; /* Было 16px */
             letter-spacing: 6px;
-            font-weight: 200;
+            font-weight: 500; /* Было 200 */
             color: #ffffff;
             text-shadow: 0.5px 0.5px 3px rgba(0,0,0,0.4);
         }
 
-        /* ========== КНОПКА МУЗЫКИ (всегда чёрная) ========== */
+        /* ========== КНОПКА МУЗЫКИ (исправленная) ========== */
         .music-control-wrapper {
             display: flex;
             flex-direction: column;
@@ -204,6 +205,8 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            /* Убираем анимацию вращения, если она была */
+            animation: none;
         }
 
         .music-toggle::before {
@@ -242,6 +245,7 @@
             fill: #1a1a1a;
         }
 
+        /* Иконки по умолчанию */
         .music-toggle .pause-icon {
             display: block;
         }
@@ -250,6 +254,7 @@
             display: none;
         }
 
+        /* Когда на паузе - показываем play */
         .music-toggle.paused .pause-icon {
             display: none;
         }
@@ -1270,6 +1275,7 @@
         /* ========== АДАПТИВНОСТЬ ========== */
         @media (max-width: 768px) {
             .hero-info { bottom: 50px; left: 30px; }
+            .hero-date { font-size: 22px; } /* Чуть меньше на планшетах */
             .details { padding: 60px 25px; }
             .timeline-section { padding: 80px 25px; }
             .location-section { padding: 80px 25px; }
@@ -1289,7 +1295,7 @@
         @media (max-width: 480px) {
             .hero-info { bottom: 40px; left: 20px; }
             .hero-names { font-size: 20px; letter-spacing: 2px; }
-            .hero-date { font-size: 12px; letter-spacing: 4px; }
+            .hero-date { font-size: 18px; letter-spacing: 4px; } /* Адаптив для телефонов */
             .details { padding: 50px 18px; }
             .timeline-section { padding: 60px 15px; }
             .timeline-container::before { left: 24px; }
@@ -1336,16 +1342,19 @@
         <section class="hero">
             <div class="hero-info">
                 <h1 class="hero-names">Дмитрий & Юлия</h1>
+                <!-- Дата стала крупнее и жирнее -->
                 <div class="hero-date">19.07.2026</div>
             </div>
         </section>
 
         <div class="music-control-wrapper">
-            <button id="music-toggle" class="music-toggle" title="Пауза / Воспроизвести">
+            <button id="music-toggle" class="music-toggle paused" title="Воспроизвести / Пауза">
+                <!-- Иконка паузы (по умолчанию скрыта, т.к. плеер на паузе) -->
                 <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor">
                     <rect x="5" y="4" width="4" height="16" rx="1"/>
                     <rect x="15" y="4" width="4" height="16" rx="1"/>
                 </svg>
+                <!-- Иконка воспроизведения (по умолчанию видна) -->
                 <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
                     <polygon points="6,3 20,12 6,21"/>
                 </svg>
@@ -1483,6 +1492,7 @@
                 setTimeout(() => { particlesContainer.classList.remove('active'); }, 4500);
             }
 
+            // ИСПРАВЛЕНИЕ ПЛЕЕРА: убрана анимация загрузки, иконки переключаются мгновенно
             function updateMusicUI() {
                 if (bgMusic.paused) {
                     musicToggle.classList.add('paused');
@@ -1495,12 +1505,17 @@
 
             musicToggle.addEventListener('click', () => {
                 if (bgMusic.paused) {
-                    bgMusic.play().then(() => updateMusicUI()).catch(e => console.log('Ошибка:', e));
+                    bgMusic.play().then(() => {
+                        updateMusicUI();
+                    }).catch(e => console.log('Ошибка воспроизведения:', e));
                 } else {
                     bgMusic.pause();
                     updateMusicUI();
                 }
             });
+
+            // Устанавливаем начальное состояние (пауза)
+            updateMusicUI();
 
             openBtn.addEventListener('click', () => {
                 const img = openBtn.querySelector('img');
@@ -1511,7 +1526,10 @@
                 animateParticles();
 
                 if (!musicStarted && bgMusic) {
-                    bgMusic.play().then(() => { musicStarted = true; updateMusicUI(); }).catch(e => console.log('Ожидание:', e));
+                    bgMusic.play().then(() => { 
+                        musicStarted = true; 
+                        updateMusicUI(); 
+                    }).catch(e => console.log('Ожидание взаимодействия:', e));
                     bgMusic.volume = 0.4;
                 }
 
