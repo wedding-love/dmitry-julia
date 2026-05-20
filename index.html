@@ -1,18 +1,15 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Приглашение: Дмитрий и Юлия</title>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700;800&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@100;200;300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gold: #c9a96e;
-            --light-bg: #faf7f2;
-            --paper: #fffaf5;
-            --dark-text: #1a1a1a;
-            --soft-text: #2c2c2c;
+            --gold: #d4af37;
+            --black: #0a0a0a;
+            --white: #ffffff;
         }
 
         * {
@@ -25,11 +22,11 @@
             height: 100%;
             width: 100%;
             font-family: 'Montserrat', sans-serif;
-            background: var(--light-bg);
+            background: var(--black);
             overflow-x: hidden;
-            font-weight: 300;
+            font-weight: 200;
             line-height: 1.8;
-            color: var(--dark-text);
+            color: var(--white);
         }
 
         /* ========== КОНВЕРТ ========== */
@@ -46,7 +43,7 @@
         }
 
         .envelope-overlay.fading {
-            filter: brightness(1.2);
+            filter: brightness(0);
             opacity: 0;
             transform: scale(1.15);
             pointer-events: none;
@@ -71,7 +68,31 @@
             display: block;
         }
 
-        /* ========== ЗВЁЗДОЧКИ ========== */
+        /* ========== ЧЁРНЫЙ ЭКРАН ========== */
+        .black-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--black);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 2s ease-in-out 0.8s;
+        }
+
+        .black-screen.active {
+            opacity: 1;
+            transition: opacity 2.5s ease-in-out;
+        }
+
+        .black-screen.fade-out {
+            opacity: 0;
+            transition: opacity 2.5s ease-in-out 0.3s;
+        }
+
+        /* ========== ЧАСТИЦЫ ========== */
         .particles-container {
             position: fixed;
             top: 0;
@@ -80,50 +101,20 @@
             height: 100%;
             pointer-events: none;
             z-index: 998;
-            overflow: hidden;
-            visibility: hidden;
-        }
-
-        .particles-container.active {
-            visibility: visible;
         }
 
         .particle {
             position: absolute;
-            background: radial-gradient(circle, rgba(201, 169, 110, 0.9), rgba(201, 169, 110, 0.2));
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.6), transparent);
             border-radius: 50%;
             opacity: 0;
-        }
-
-        /* ========== СВЕТЛЫЙ ЭКРАН-ЗАТЕМНЕНИЕ ========== */
-        .light-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--light-bg);
-            z-index: 999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 2s ease-in-out 0.8s;
-        }
-
-        .light-screen.active {
-            opacity: 1;
-            transition: opacity 2.5s ease-in-out;
-        }
-
-        .light-screen.fade-out {
-            opacity: 0;
-            transition: opacity 2.5s ease-in-out 0.3s;
         }
 
         /* ========== ОСНОВНОЙ КОНТЕНТ ========== */
         #main-content {
             width: 100%;
-            background-color: var(--light-bg);
-            color: var(--dark-text);
+            background-color: var(--black);
+            color: var(--white);
             opacity: 0;
             transition: opacity 2.5s ease-in-out 1.5s;
             position: relative;
@@ -136,10 +127,10 @@
         /* ========== БЛОК 1: ГЕРОЙ ========== */
         .hero {
             height: 100vh;
-            width: 100%;
             display: flex;
             position: relative;
-            background: url('молодые.jpg') center/cover no-repeat;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), 
+                        url('молодые.jpg') center/cover no-repeat;
             opacity: 0;
             transform: scale(1.05);
             transition: opacity 2s ease-out 2s, transform 2.5s ease-out 2s;
@@ -155,45 +146,38 @@
             bottom: 60px;
             left: 40px;
             text-align: left;
-            background: transparent;
-            padding: 0;
         }
 
         .hero-names {
-            font-family: 'Montserrat', sans-serif;
             font-size: clamp(24px, 5vw, 48px);
             font-weight: 200;
             letter-spacing: 4px;
             text-transform: uppercase;
             margin-bottom: 10px;
-            color: #ffffff;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+            color: var(--white);
         }
 
-        /* Увеличенная и жирная дата */
         .hero-date {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 26px;
+            font-size: 16px;
             letter-spacing: 6px;
-            font-weight: 500;
-            color: #ffffff;
-            text-shadow: 0.5px 0.5px 3px rgba(0,0,0,0.4);
+            font-weight: 100;
+            color: var(--gold);
         }
 
-        /* ========== КНОПКА МУЗЫКИ (ИСПРАВЛЕНО) ========== */
+        /* ========== КНОПКА МУЗЫКИ ========== */
         .music-control-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 14px;
             padding: 30px 20px 10px;
-            background-color: var(--light-bg);
+            background-color: var(--black);
         }
 
         .music-toggle {
-            background: #1a1a1a; /* Черный фон */
-            border: none;
-            color: #ffffff; /* Белый цвет по умолчанию (влияет на currentColor) */
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--white);
             width: 48px;
             height: 48px;
             border-radius: 50%;
@@ -204,10 +188,6 @@
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            animation: none;
-            /* Гарантируем, что содержимое не вылезает */
-            padding: 0;
         }
 
         .music-toggle::before {
@@ -219,7 +199,7 @@
             height: 100%;
             background: var(--gold);
             transition: left 0.4s ease;
-            z-index: 1; /* Перекрывает фон */
+            z-index: -1;
             border-radius: 50%;
         }
 
@@ -228,28 +208,23 @@
         }
 
         .music-toggle:hover {
-            color: #1a1a1a; /* Иконки станут черными при наведении */
-            box-shadow: 0 0 20px rgba(26, 26, 26, 0.3);
+            color: var(--black);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .music-toggle:hover svg {
+            color: var(--black);
         }
 
         .music-toggle svg {
             width: 22px;
             height: 22px;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, color 0.3s ease;
             position: absolute;
-            /* Принудительно задаем цвет заливки и обводки */
-            color: #ffffff; 
-            fill: #ffffff;
-            z-index: 2; /* Иконка над псевдоэлементом */
+            color: var(--white);
+            fill: var(--white);
         }
 
-        /* При наведении меняем цвет иконок на черный */
-        .music-toggle:hover svg {
-            color: #1a1a1a;
-            fill: #1a1a1a;
-        }
-
-        /* Иконки по умолчанию */
         .music-toggle .pause-icon {
             display: block;
         }
@@ -258,7 +233,6 @@
             display: none;
         }
 
-        /* Когда на паузе - показываем play */
         .music-toggle.paused .pause-icon {
             display: none;
         }
@@ -271,15 +245,15 @@
             font-size: 11px;
             letter-spacing: 3px;
             text-transform: lowercase;
-            color: var(--soft-text);
-            opacity: 0.6;
+            color: var(--white);
+            opacity: 0.5;
             font-weight: 300;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.4s ease, color 0.4s ease;
             text-align: center;
         }
 
         .music-control-wrapper:hover .music-label {
-            opacity: 0.9;
+            opacity: 0.8;
         }
 
         /* ========== БЛОК 2: ДЕТАЛИ ========== */
@@ -323,9 +297,9 @@
         .invitation-greeting-text {
             font-family: 'Cormorant Garamond', serif;
             font-size: clamp(2rem, 5vw, 3rem);
-            color: var(--dark-text);
+            color: var(--white);
             letter-spacing: 4px;
-            font-weight: 500;
+            font-weight: 300;
             line-height: 1.2;
             text-transform: uppercase;
         }
@@ -333,14 +307,15 @@
         .invitation-text {
             font-size: 15px;
             letter-spacing: 0.5px;
-            font-weight: 300;
+            font-weight: 200;
             text-align: center;
+            hyphens: auto;
             width: 100%;
             max-width: 500px;
             margin: 0 auto;
             line-height: 2;
-            color: var(--soft-text);
-            opacity: 0.9;
+            color: var(--white);
+            opacity: 0.85;
         }
 
         .invitation-divider {
@@ -362,7 +337,7 @@
             text-transform: uppercase;
             color: var(--gold);
             margin-bottom: 30px;
-            font-weight: 400;
+            font-weight: 300;
         }
 
         .calendar-grid {
@@ -376,7 +351,7 @@
 
         .day-header {
             color: var(--gold);
-            font-weight: 400;
+            font-weight: 300;
             font-size: 9px;
             padding-bottom: 10px;
         }
@@ -387,12 +362,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            color: var(--dark-text);
-            font-weight: 300;
+            color: var(--white);
+            font-weight: 200;
         }
 
         .day.wedding-day {
-            font-weight: 500;
+            font-weight: 300;
             position: relative;
             color: var(--gold);
         }
@@ -409,7 +384,9 @@
 
         /* ========== БЛОК 3: ТАЙМИНГ ========== */
         .timeline-section {
-            background-color: var(--paper);
+            background-color: #111111;
+            color: var(--white);
+            min-height: 100vh;
             padding: 100px 40px;
             display: flex;
             flex-direction: column;
@@ -420,11 +397,11 @@
         .timeline-title {
             font-size: 18px;
             letter-spacing: 6px;
-            font-weight: 400;
+            font-weight: 300;
             text-transform: uppercase;
             margin-bottom: 60px;
             position: relative;
-            color: var(--dark-text);
+            color: var(--white);
         }
 
         .timeline-title::after {
@@ -454,7 +431,7 @@
             top: 30px;
             bottom: 30px;
             width: 1px;
-            background: rgba(201, 169, 110, 0.3);
+            background: rgba(212, 175, 55, 0.3);
             z-index: 0;
         }
 
@@ -479,12 +456,12 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: var(--light-bg);
+            background: var(--black);
             border: 1px solid var(--gold);
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 15px rgba(201, 169, 110, 0.15);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
             position: relative;
         }
 
@@ -500,33 +477,35 @@
         }
 
         .timeline-time {
-            font-weight: 400;
+            font-weight: 300;
             font-size: 20px;
             letter-spacing: 2px;
             margin-bottom: 4px;
-            color: var(--dark-text);
+            color: var(--white);
         }
 
         .timeline-desc {
             font-size: 13px;
             letter-spacing: 1px;
-            font-weight: 300;
+            font-weight: 200;
             text-transform: uppercase;
-            color: var(--soft-text);
+            color: var(--white);
         }
 
         .timeline-note {
             font-size: 11px;
-            font-weight: 300;
+            font-weight: 200;
             letter-spacing: 0.5px;
             margin-top: 3px;
-            color: var(--soft-text);
-            opacity: 0.7;
+            color: var(--white);
+            opacity: 0.5;
+            text-transform: none;
         }
 
         /* ========== БЛОК 4: ЛОКАЦИЯ ========== */
         .location-section {
-            background-color: var(--light-bg);
+            background-color: var(--black);
+            color: var(--white);
             padding: 100px 30px;
             display: flex;
             flex-direction: column;
@@ -545,10 +524,10 @@
         .location-title {
             font-size: 18px;
             letter-spacing: 6px;
-            font-weight: 400;
+            font-weight: 300;
             text-transform: uppercase;
             margin-bottom: 40px;
-            color: var(--dark-text);
+            color: var(--white);
         }
 
         .location-container {
@@ -562,7 +541,7 @@
             border-radius: 2px;
             overflow: hidden;
             margin-bottom: 30px;
-            border: 1px solid rgba(201, 169, 110, 0.25);
+            border: 1px solid rgba(212, 175, 55, 0.25);
             position: relative;
             transition: transform 0.5s ease, border-color 0.5s ease;
         }
@@ -577,7 +556,7 @@
             height: 100%;
             object-fit: cover;
             background: url('image.png') center/cover;
-            filter: grayscale(20%);
+            filter: grayscale(30%);
             transition: filter 0.5s ease;
         }
 
@@ -591,26 +570,26 @@
 
         .location-name {
             font-size: 18px;
-            font-weight: 400;
+            font-weight: 300;
             letter-spacing: 2px;
             margin-bottom: 10px;
             text-transform: uppercase;
-            color: var(--dark-text);
+            color: var(--white);
         }
 
         .location-address {
             font-size: 14px;
-            font-weight: 300;
+            font-weight: 200;
             letter-spacing: 1px;
-            opacity: 0.7;
-            color: var(--soft-text);
+            opacity: 0.6;
+            color: var(--white);
         }
 
         .map-button {
             display: inline-block;
             padding: 15px 40px;
             border: 1px solid var(--gold);
-            color: var(--dark-text);
+            color: var(--white);
             text-decoration: none;
             font-size: 12px;
             letter-spacing: 3px;
@@ -618,8 +597,7 @@
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
-            font-weight: 400;
-            background: transparent;
+            font-weight: 200;
         }
 
         .map-button::before {
@@ -639,13 +617,14 @@
         }
 
         .map-button:hover {
-            color: var(--light-bg);
-            box-shadow: 0 0 20px rgba(201, 169, 110, 0.3);
+            color: var(--black);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
         }
 
         /* ========== БЛОК 5: ДРЕСС-КОД ========== */
         .dresscode-section {
-            background-color: var(--paper);
+            background-color: #111111;
+            color: var(--white);
             padding: 100px 0;
             display: flex;
             flex-direction: column;
@@ -664,23 +643,23 @@
         .dresscode-title {
             font-size: 18px;
             letter-spacing: 6px;
-            font-weight: 400;
+            font-weight: 300;
             text-transform: uppercase;
             margin-bottom: 20px;
             padding: 0 20px;
-            color: var(--dark-text);
+            color: var(--white);
         }
 
         .dresscode-text {
             font-size: 14px;
             max-width: 350px;
             margin-bottom: 40px;
-            font-weight: 300;
+            font-weight: 200;
             letter-spacing: 1px;
             padding: 0 20px;
             line-height: 1.8;
-            color: var(--soft-text);
-            opacity: 0.85;
+            color: var(--white);
+            opacity: 0.7;
         }
 
         .slider-wrapper {
@@ -721,8 +700,8 @@
             width: 100%;
             height: 380px;
             object-fit: cover;
-            border: 1px solid rgba(201, 169, 110, 0.2);
-            filter: sepia(10%);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            filter: sepia(15%);
             transition: filter 0.4s ease;
         }
 
@@ -730,6 +709,7 @@
             filter: sepia(0%);
         }
 
+        /* Палитра: кружочки строго по центру над текстом */
         .palette {
             display: flex;
             flex-direction: column;
@@ -767,22 +747,23 @@
 
         .color-circle:hover {
             transform: scale(1.2);
-            box-shadow: 0 0 15px rgba(201, 169, 110, 0.4);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
         }
 
         .color-label {
             font-size: 11px;
             letter-spacing: 2px;
             text-transform: uppercase;
-            color: var(--soft-text);
-            opacity: 0.7;
+            color: var(--white);
+            opacity: 0.5;
             font-weight: 300;
             white-space: nowrap;
             transition: opacity 0.3s ease;
+            text-align: center;
         }
 
         .palette-item:hover .color-label {
-            opacity: 1;
+            opacity: 0.8;
         }
 
         .c1 { background-color: #E6CAC9; }
@@ -792,7 +773,8 @@
 
         /* ========== БЛОК 6: ПОЖЕЛАНИЯ ========== */
         .wishes-section {
-            background-color: var(--light-bg);
+            background-color: var(--black);
+            color: var(--white);
             padding: 100px 30px;
             display: flex;
             flex-direction: column;
@@ -811,21 +793,21 @@
         .wishes-title {
             font-size: 18px;
             letter-spacing: 6px;
-            font-weight: 400;
+            font-weight: 300;
             text-transform: uppercase;
             margin-bottom: 20px;
-            color: var(--dark-text);
+            color: var(--white);
         }
 
         .wishes-text {
             font-size: 14px;
             max-width: 450px;
             margin-bottom: 25px;
-            font-weight: 300;
+            font-weight: 200;
             letter-spacing: 1px;
             line-height: 2;
-            color: var(--soft-text);
-            opacity: 0.85;
+            color: var(--white);
+            opacity: 0.7;
         }
 
         .wishes-divider {
@@ -838,7 +820,8 @@
 
         /* ========== БЛОК 7: АНКЕТА ГОСТЯ ========== */
         .survey-section {
-            background-color: var(--paper);
+            background-color: #111111;
+            color: var(--white);
             padding: 100px 30px;
             display: flex;
             flex-direction: column;
@@ -857,21 +840,21 @@
         .survey-title {
             font-size: 18px;
             letter-spacing: 6px;
-            font-weight: 400;
+            font-weight: 300;
             text-transform: uppercase;
             margin-bottom: 20px;
-            color: var(--dark-text);
+            color: var(--white);
         }
 
         .survey-subtitle {
             font-size: 14px;
-            font-weight: 300;
+            font-weight: 200;
             letter-spacing: 2px;
             margin-bottom: 50px;
-            opacity: 0.7;
+            opacity: 0.6;
             max-width: 400px;
             line-height: 1.8;
-            color: var(--soft-text);
+            color: var(--white);
         }
 
         .survey-form {
@@ -894,45 +877,59 @@
             text-transform: uppercase;
             color: var(--gold);
             margin-bottom: 12px;
-            font-weight: 400;
+            font-weight: 300;
         }
 
         .form-input, .form-select, .form-textarea {
             background: transparent;
             border: none;
-            border-bottom: 1px solid rgba(26, 26, 26, 0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
             padding: 14px 0;
-            color: var(--dark-text);
+            color: var(--white);
             font-family: 'Montserrat', sans-serif;
             font-size: 14px;
-            font-weight: 300;
+            font-weight: 200;
             letter-spacing: 1px;
-            transition: border-color 0.4s ease;
+            transition: border-color 0.4s ease, padding-left 0.4s ease;
             outline: none;
             width: 100%;
         }
 
         .form-input:focus, .form-select:focus, .form-textarea:focus {
             border-bottom-color: var(--gold);
+            padding-left: 8px;
+        }
+
+        .form-input::placeholder, .form-textarea::placeholder {
+            color: rgba(255,255,255,0.2);
+            font-weight: 100;
         }
 
         .form-select {
             cursor: pointer;
             appearance: none;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23c9a96e' d='M6 8L0 0h12z'/%3E%3C/svg%3E") no-repeat right center;
+            -webkit-appearance: none;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23d4af37' d='M6 8L0 0h12z'/%3E%3C/svg%3E") no-repeat right center;
             padding-right: 30px;
+        }
+
+        .form-select option {
+            background: var(--black);
+            color: var(--white);
+            padding: 10px;
         }
 
         .form-textarea {
             resize: vertical;
             min-height: 100px;
-            border: 1px solid rgba(26, 26, 26, 0.2);
+            border: 1px solid rgba(255,255,255,0.2);
             padding: 14px;
             border-radius: 2px;
         }
 
         .form-textarea:focus {
             border-color: var(--gold);
+            padding-left: 14px;
         }
 
         .radio-group, .checkbox-group {
@@ -956,9 +953,10 @@
 
         .radio-item input, .checkbox-item input {
             appearance: none;
+            -webkit-appearance: none;
             width: 18px;
             height: 18px;
-            border: 1px solid rgba(26, 26, 26, 0.3);
+            border: 1px solid rgba(255,255,255,0.3);
             border-radius: 50%;
             cursor: pointer;
             position: relative;
@@ -987,22 +985,22 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: var(--paper);
+            color: var(--black);
             font-size: 11px;
             font-weight: bold;
         }
 
         .radio-label, .checkbox-label {
             font-size: 13px;
-            font-weight: 300;
+            font-weight: 200;
             letter-spacing: 1px;
-            color: var(--dark-text);
+            color: var(--white);
         }
 
         .submit-button {
             background: transparent;
             border: 1px solid var(--gold);
-            color: var(--dark-text);
+            color: var(--white);
             padding: 16px 50px;
             font-family: 'Montserrat', sans-serif;
             font-size: 12px;
@@ -1011,7 +1009,7 @@
             cursor: pointer;
             transition: all 0.5s ease;
             margin-top: 10px;
-            font-weight: 400;
+            font-weight: 200;
             align-self: center;
             position: relative;
             overflow: hidden;
@@ -1034,13 +1032,20 @@
         }
 
         .submit-button:hover {
-            color: var(--paper);
-            box-shadow: 0 0 30px rgba(201, 169, 110, 0.4);
+            color: var(--black);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .submit-button.submitted {
+            background: var(--gold);
+            color: var(--black);
+            pointer-events: none;
         }
 
         /* ========== БЛОК 8: ТАЙМЕР ========== */
         .countdown-section {
-            background-color: var(--paper);
+            background-color: #111111;
+            color: var(--white);
             padding: 100px 30px;
             display: flex;
             flex-direction: column;
@@ -1071,19 +1076,20 @@
         .countdown-title {
             font-size: 18px;
             letter-spacing: 6px;
-            font-weight: 400;
+            font-weight: 300;
             text-transform: uppercase;
             margin-bottom: 15px;
-            color: var(--dark-text);
+            color: var(--white);
         }
 
         .countdown-subtitle {
             font-size: 14px;
-            font-weight: 300;
+            font-weight: 200;
             letter-spacing: 2px;
             margin-bottom: 50px;
-            opacity: 0.7;
-            color: var(--soft-text);
+            opacity: 0.6;
+            color: var(--white);
+            line-height: 1.8;
             max-width: 450px;
         }
 
@@ -1095,27 +1101,36 @@
             flex-wrap: nowrap;
         }
 
+        .countdown-item {
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+        }
+
         .countdown-number {
             font-family: 'Montserrat', sans-serif;
             font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 400;
-            color: var(--dark-text);
+            font-weight: 200;
+            color: var(--white);
             letter-spacing: 2px;
+            line-height: 1;
         }
 
         .countdown-label {
             font-size: clamp(0.6rem, 1.5vw, 0.75rem);
             letter-spacing: 2px;
             text-transform: lowercase;
-            color: var(--soft-text);
-            opacity: 0.6;
-            font-weight: 300;
+            color: var(--white);
+            opacity: 0.4;
+            font-weight: 200;
+            white-space: nowrap;
         }
 
         .countdown-separator {
             font-size: clamp(1.5rem, 4vw, 2.5rem);
             color: var(--gold);
             opacity: 0.6;
+            font-weight: 100;
             margin: 0 2px;
         }
 
@@ -1123,9 +1138,9 @@
             margin-top: 50px;
             font-family: 'Cormorant Garamond', serif;
             font-size: clamp(1.3rem, 3vw, 1.8rem);
-            color: var(--gold);
+            color: var(--white);
             letter-spacing: 3px;
-            font-weight: 500;
+            font-weight: 300;
             opacity: 0;
             animation: fadeInUp 1.5s ease-out 1s forwards;
             text-transform: uppercase;
@@ -1133,7 +1148,8 @@
 
         /* ========== БЛОК 9: КОНТАКТЫ ========== */
         .contacts-section {
-            background-color: var(--light-bg);
+            background-color: var(--black);
+            color: var(--white);
             min-height: 100vh;
             padding: 60px 30px;
             display: flex;
@@ -1154,10 +1170,10 @@
         .contacts-title {
             font-size: 18px;
             letter-spacing: 6px;
-            font-weight: 400;
+            font-weight: 300;
             text-transform: uppercase;
             margin-bottom: 30px;
-            color: var(--dark-text);
+            color: var(--white);
         }
 
         .contacts-photo-wrapper {
@@ -1167,10 +1183,10 @@
             overflow: hidden;
             margin-bottom: 30px;
             border: 2px solid var(--gold);
-            box-shadow: 0 0 30px rgba(201, 169, 110, 0.2);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
             opacity: 0;
             transform: scale(0.8);
-            transition: opacity 1s ease-out 0.3s, transform 1s ease-out 0.3s;
+            transition: opacity 1s ease-out 0.3s, transform 1s ease-out 0.3s, box-shadow 0.5s ease;
         }
 
         .contacts-section.visible .contacts-photo-wrapper {
@@ -1179,7 +1195,7 @@
         }
 
         .contacts-photo-wrapper:hover {
-            box-shadow: 0 0 50px rgba(201, 169, 110, 0.5);
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.5);
         }
 
         .contacts-photo {
@@ -1196,20 +1212,23 @@
             transform: scale(1.05);
         }
 
+        .contacts-info {
+            margin-bottom: 25px;
+        }
+
         .contact-item {
             margin-bottom: 12px;
             font-size: 14px;
-            font-weight: 300;
+            font-weight: 200;
             letter-spacing: 2px;
-            color: var(--soft-text);
-            opacity: 0.85;
+            color: var(--white);
+            opacity: 0.8;
         }
 
         .contact-item a {
-            color: var(--dark-text);
+            color: var(--white);
             text-decoration: none;
             transition: color 0.3s ease;
-            font-weight: 400;
         }
 
         .contact-item a:hover {
@@ -1221,7 +1240,7 @@
             margin-top: 20px;
             padding: 12px 30px;
             border: 1px solid var(--gold);
-            color: var(--dark-text);
+            color: var(--white);
             text-decoration: none;
             font-size: 12px;
             letter-spacing: 3px;
@@ -1229,8 +1248,7 @@
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
-            font-weight: 400;
-            background: transparent;
+            font-weight: 200;
         }
 
         .telegram-link::before {
@@ -1250,38 +1268,56 @@
         }
 
         .telegram-link:hover {
-            color: var(--paper);
-            box-shadow: 0 0 20px rgba(201, 169, 110, 0.3);
+            color: var(--black);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
         }
 
         .contacts-note {
             margin-top: 25px;
             font-size: 13px;
-            font-weight: 300;
+            font-weight: 200;
             letter-spacing: 1px;
-            opacity: 0.7;
+            opacity: 0.5;
             max-width: 400px;
-            color: var(--soft-text);
+            line-height: 1.8;
         }
 
         /* ========== АНИМАЦИИ ========== */
         @keyframes sparkle {
-            0% { opacity: 0; transform: scale(0) rotate(0deg); }
-            50% { opacity: 0.8; }
-            100% { opacity: 0; transform: scale(1.8) rotate(180deg); }
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(0deg);
+            }
+            50% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.5) rotate(180deg);
+            }
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* ========== АДАПТИВНОСТЬ ========== */
         @media (max-width: 768px) {
             .hero-info { bottom: 50px; left: 30px; }
-            .hero-date { font-size: 22px; }
             .details { padding: 60px 25px; }
             .timeline-section { padding: 80px 25px; }
+            .timeline-container::before { left: 30px; }
+            .timeline-item { gap: 20px; }
+            .timeline-icon-wrapper { width: 42px; height: 42px; }
+            .timeline-icon { width: 20px; height: 20px; }
+            .timeline-time { font-size: 18px; }
             .location-section { padding: 80px 25px; }
             .dresscode-section { padding: 80px 0; }
             .wishes-section { padding: 80px 25px; }
@@ -1292,21 +1328,27 @@
             .slide img { height: 340px; }
             .slide:first-child { margin-left: 12.5%; }
             .slide:last-child { margin-right: 12.5%; }
+            .contacts-photo-wrapper { width: min(300px, 60vw); height: min(300px, 60vw); }
             .palette-row { gap: 40px; }
-            .palette-item { min-width: 75px; }
+            .palette-item { min-width: 75px; gap: 10px; }
+            .color-circle { width: 24px; height: 24px; }
+            .color-label { font-size: 10px; letter-spacing: 1.5px; }
         }
 
         @media (max-width: 480px) {
             .hero-info { bottom: 40px; left: 20px; }
             .hero-names { font-size: 20px; letter-spacing: 2px; }
-            .hero-date { font-size: 18px; letter-spacing: 4px; }
             .details { padding: 50px 18px; }
+            .invitation-greeting-text { font-size: 1.6rem; }
+            .invitation-text { font-size: 13px; line-height: 1.9; }
             .timeline-section { padding: 60px 15px; }
             .timeline-container::before { left: 24px; }
             .timeline-item { gap: 15px; }
             .timeline-icon-wrapper { width: 36px; height: 36px; }
             .timeline-icon { width: 18px; height: 18px; }
             .timeline-time { font-size: 16px; }
+            .timeline-desc { font-size: 11px; }
+            .timeline-note { font-size: 10px; }
             .location-section { padding: 60px 20px; }
             .location-image-wrapper { height: 220px; }
             .dresscode-section { padding: 60px 0; }
@@ -1314,35 +1356,53 @@
             .survey-section { padding: 60px 20px; }
             .countdown-section { padding: 60px 20px; }
             .contacts-section { padding: 50px 20px; }
+            .survey-form { gap: 22px; }
+            .radio-group, .checkbox-group { gap: 12px; }
             .slide { flex: 0 0 82%; }
             .slide img { height: 280px; }
             .slide:first-child { margin-left: 9%; }
             .slide:last-child { margin-right: 9%; }
+            .submit-button { padding: 14px 35px; font-size: 11px; }
+            .countdown-timer { gap: 4px; }
+            .countdown-number { font-size: 1.6rem; }
+            .countdown-label { font-size: 0.55rem; }
+            .countdown-separator { font-size: 1.2rem; margin: 0 1px; }
+            .contacts-photo-wrapper { width: min(250px, 65vw); height: min(250px, 65vw); }
             .palette-row { gap: 28px; }
             .palette-item { min-width: 65px; gap: 8px; }
             .color-circle { width: 20px; height: 20px; }
             .color-label { font-size: 9px; letter-spacing: 1px; }
             .music-toggle { width: 40px; height: 40px; }
             .music-toggle svg { width: 18px; height: 18px; }
+            .music-label { font-size: 10px; letter-spacing: 2px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- ========== МУЗЫКА ========== -->
     <audio id="bg-music" loop preload="auto">
         <source src="музыка.mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает аудио.
     </audio>
 
+    <!-- ========== КОНВЕРТ ========== -->
     <div id="envelope-overlay" class="envelope-overlay">
         <button id="open-btn" class="seal-button">
             <img src="кнопка.PNG" alt="Открыть приглашение">
         </button>
     </div>
 
-    <div id="light-screen" class="light-screen"></div>
+    <!-- ========== ЧЁРНЫЙ ЭКРАН ========== -->
+    <div id="black-screen" class="black-screen"></div>
+
+    <!-- ========== ЧАСТИЦЫ ========== -->
     <div id="particles" class="particles-container"></div>
 
+    <!-- ========== ОСНОВНОЙ КОНТЕНТ ========== -->
     <main id="main-content">
+
+        <!-- БЛОК 1: ГЕРОЙ -->
         <section class="hero">
             <div class="hero-info">
                 <h1 class="hero-names">Дмитрий & Юлия</h1>
@@ -1350,22 +1410,23 @@
             </div>
         </section>
 
+        <!-- КНОПКА УПРАВЛЕНИЯ МУЗЫКОЙ -->
         <div class="music-control-wrapper">
-            <!-- Плеер сразу в состоянии паузы, чтобы отображалась иконка Play -->
-            <button id="music-toggle" class="music-toggle paused" title="Воспроизвести / Пауза">
-                <!-- Иконка паузы (две полоски) - белая на черном -->
-                <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor">
+            <button id="music-toggle" class="music-toggle" title="Пауза / Воспроизвести">
+                <!-- Иконка паузы (две полоски) - всегда белая -->
+                <svg class="pause-icon" viewBox="0 0 24 24" fill="white">
                     <rect x="5" y="4" width="4" height="16" rx="1"/>
                     <rect x="15" y="4" width="4" height="16" rx="1"/>
                 </svg>
-                <!-- Иконка play (треугольник) - белая на черном -->
-                <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                <!-- Иконка воспроизведения (треугольник вправо) - всегда белая -->
+                <svg class="play-icon" viewBox="0 0 24 24" fill="white">
                     <polygon points="6,3 20,12 6,21"/>
                 </svg>
             </button>
             <span class="music-label" id="music-label">включить музыку</span>
         </div>
 
+        <!-- БЛОК 2: ДЕТАЛИ -->
         <section class="details">
             <div class="invitation-block-wrapper">
                 <div class="invitation-greeting">
@@ -1380,7 +1441,9 @@
                     Ваше присутствие сделает наш праздник по-настоящему особенным и незабываемым.
                 </p>
             </div>
+
             <div class="invitation-divider"></div>
+
             <div class="calendar-section">
                 <div class="month-name">Июль 2026</div>
                 <div class="calendar-grid">
@@ -1398,66 +1461,280 @@
             </div>
         </section>
 
+        <!-- БЛОК 3: ТАЙМИНГ -->
         <section class="timeline-section">
             <h2 class="timeline-title">Программа дня</h2>
+            
             <div class="timeline-container">
-                <div class="timeline-item"><div class="timeline-icon-wrapper"><svg class="timeline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 21h8M12 15v6M17 3H7L5 9c0 1.1.9 2 2 2 1.1 0 2-.9 2-2 0 1.1.9 2 2 2s2-.9 2-2c0 1.1.9 2 2 2 1.1 0 2-.9 2-2l-2-6z"/></svg></div><div class="timeline-content"><div class="timeline-time">12:20</div><div class="timeline-desc">Официальная регистрация брака</div><div class="timeline-note">Дворец Бракосочетания №1, Английская наб., 28</div></div></div>
-                <div class="timeline-item"><div class="timeline-icon-wrapper"><svg class="timeline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><circle cx="16" cy="16" r="6"/><path d="M13 11l3 3"/></svg></div><div class="timeline-content"><div class="timeline-time">12:50</div><div class="timeline-desc">Прогулка и фотосессия</div></div></div>
-                <div class="timeline-item"><div class="timeline-icon-wrapper"><svg class="timeline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3h12l2 6H4l2-6z"/><circle cx="12" cy="15" r="4"/><path d="M4 9h16v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V9z"/></svg></div><div class="timeline-content"><div class="timeline-time">14:00</div><div class="timeline-desc">Прогулка на теплоходе по Санкт-Петербургу</div><div class="timeline-note">Отправление: Медный Всадник</div></div></div>
-                <div class="timeline-item"><div class="timeline-icon-wrapper"><svg class="timeline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 20h18v-4H3v4zM3 16h18V8H3v8zM3 8h18V3H3v5z"/><line x1="8" y1="8" x2="8" y2="12"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="16" y1="8" x2="16" y2="12"/></svg></div><div class="timeline-content"><div class="timeline-time">16:30</div><div class="timeline-desc">Свадебный ужин</div></div></div>
-                <div class="timeline-item"><div class="timeline-icon-wrapper"><svg class="timeline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 17V4l12-2v13"/><circle cx="6" cy="17" r="3"/><circle cx="18" cy="15" r="3"/></svg></div><div class="timeline-content"><div class="timeline-time">22:30</div><div class="timeline-desc">Завершение вечера</div></div></div>
+                <div class="timeline-item">
+                    <div class="timeline-icon-wrapper">
+                        <svg class="timeline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M8 21h8M12 15v6M17 3H7L5 9c0 1.1.9 2 2 2 1.1 0 2-.9 2-2 0 1.1.9 2 2 2s2-.9 2-2c0 1.1.9 2 2 2 1.1 0 2-.9 2-2l-2-6z"/>
+                        </svg>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-time">12:20</div>
+                        <div class="timeline-desc">Официальная регистрация брака</div>
+                        <div class="timeline-note">Дворец Бракосочетания №1, Английская наб., 28</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon-wrapper">
+                        <svg class="timeline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="8" cy="8" r="6"/><circle cx="16" cy="16" r="6"/><path d="M13 11l3 3"/>
+                        </svg>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-time">12:50</div>
+                        <div class="timeline-desc">Прогулка и фотосессия</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon-wrapper">
+                        <svg class="timeline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 3h12l2 6H4l2-6z"/><circle cx="12" cy="15" r="4"/><path d="M4 9h16v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V9z"/>
+                        </svg>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-time">14:00</div>
+                        <div class="timeline-desc">Прогулка на теплоходе по Санкт-Петербургу</div>
+                        <div class="timeline-note">Отправление: Медный Всадник</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon-wrapper">
+                        <svg class="timeline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 20h18v-4H3v4zM3 16h18V8H3v8zM3 8h18V3H3v5z"/>
+                            <line x1="8" y1="8" x2="8" y2="12"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="16" y1="8" x2="16" y2="12"/>
+                        </svg>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-time">16:30</div>
+                        <div class="timeline-desc">Свадебный ужин</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon-wrapper">
+                        <svg class="timeline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 17V4l12-2v13"/><circle cx="6" cy="17" r="3"/><circle cx="18" cy="15" r="3"/>
+                        </svg>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-time">22:30</div>
+                        <div class="timeline-desc">Завершение вечера</div>
+                    </div>
+                </div>
             </div>
         </section>
 
+        <!-- БЛОК 4: ЛОКАЦИЯ -->
         <section class="location-section">
             <h2 class="location-title">Локация</h2>
+            
             <div class="location-container">
-                <div class="location-image-wrapper"><div class="location-image" style="background: url('image.png') center/cover;"></div></div>
-                <div class="location-info"><p class="location-name">Панорамный ресторан Graf ZEPPELIN</p><p class="location-address">набережная реки Фонтанки, 142, Санкт-Петербург</p></div>
-                <a href="https://yandex.by/maps/org/graf_zeppelin/1766455298/" target="_blank" class="map-button">Открыть карту</a>
+                <div class="location-image-wrapper">
+                    <div class="location-image" style="background: url('image.png') center/cover;"></div>
+                </div>
+                
+                <div class="location-info">
+                    <p class="location-name">Панорамный ресторан Graf ZEPPELIN</p>
+                    <p class="location-address">набережная реки Фонтанки, 142, Санкт-Петербург</p>
+                </div>
+
+                <a href="https://yandex.by/maps/org/graf_zeppelin/1766455298/?filter=alternate_vertical%3ARequestWindow&ll=30.294609%2C59.915698&mode=search&sctx=ZAAAAAgBEAAaKAoSCXmu78NBjjtAES%2F6CtKM80pAEhIJq7TFNT6TzT8RH%2FXXKyy4tz8iBgABAgMEBSgKOABAnQFIAWI6cmVhcnI9c2NoZW1lX0xvY2FsL0dlb3VwcGVyL0FkdmVydHMvQ3VzdG9tTWF4YWR2L0VuYWJsZWQ9MWI6cmVhcnI9c2NoZW1lX0xvY2FsL0dlb3VwcGVyL0FkdmVydHMvQ3VzdG9tTWF4YWR2L01heGFkdj0xNWJEcmVhcnI9c2NoZW1lX0xvY2FsL0dlb3VwcGVyL0FkdmVydHMvQ3VzdG9tTWF4YWR2L1JlZ2lvbklkcz1bMSwxMDE3NF1iQHJlYXJyPXNjaGVtZV9Mb2NhbC9HZW91cHBlci9BZHZlcnRzL01heGFkdlRvcE1peC9NYXhhZHZGb3JNaXg9MTBqAnVhnQHNzMw9oAEAqAEAvQE1VbpxwgEFgvCnygaCAocB0J%2FQsNC90L7RgNCw0LzQvdGL0Lkg0YDQtdGB0YLQvtGA0LDQvSBHcmFmIFpFUFBFTElOICDQvdCw0LHQtdGA0LXQttC90LDRjyDRgNC10LrQuCDQpNC%2B0L3RgtCw0L3QutC4LCAxNDIsINCh0LDQvdC60YIt0J%2FQtdGC0LXRgNCx0YPRgNCzigIAkgIBMpoCDGRlc2t0b3AtbWFwc7ACAQ%3D%3D&sll=30.294609%2C59.915698&sspn=0.028882%2C0.009848&text=Панорамный%20ресторан%20Graf%20ZEPPELIN%20%20набережная%20реки%20Фонтанки%2C%20142%2C%20Санкт-Петербург&z=15" target="_blank" class="map-button">
+                    Открыть карту
+                </a>
             </div>
         </section>
 
+        <!-- БЛОК 5: ДРЕСС-КОД -->
         <section class="dresscode-section">
             <h2 class="dresscode-title">Дресс-код</h2>
             <p class="dresscode-text">Мы выбрали нежные пастельные оттенки, которые создают атмосферу лёгкости и романтики. Пудровый, бежевый, кремовый, светло-коричневый — пусть ваш образ станет частью этой гармонии.</p>
-            <div class="slider-wrapper"><div class="slider"><div class="slide"><img src="платье1.jpg" alt="Style 1"></div><div class="slide"><img src="платье2.jpeg" alt="Style 2"></div><div class="slide"><img src="платье3.png" alt="Style 3"></div></div></div>
-            <div class="palette"><div class="palette-row"><div class="palette-item"><div class="color-circle c1"></div><span class="color-label">пудровый</span></div><div class="palette-item"><div class="color-circle c2"></div><span class="color-label">бежевый</span></div><div class="palette-item"><div class="color-circle c3"></div><span class="color-label">кремовый</span></div></div><div class="palette-row"><div class="palette-item"><div class="color-circle c4"></div><span class="color-label">светло-коричневый</span></div></div></div>
+
+            <div class="slider-wrapper">
+                <div class="slider">
+                    <div class="slide">
+                        <img src="платье1.jpg" alt="Style 1">
+                    </div>
+                    <div class="slide">
+                        <img src="платье2.jpeg" alt="Style 2">
+                    </div>
+                    <div class="slide">
+                        <img src="платье3.png" alt="Style 3">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Палитра: кружочки строго по центру над текстом -->
+            <div class="palette">
+                <!-- Первый ряд: 3 цвета -->
+                <div class="palette-row">
+                    <div class="palette-item">
+                        <div class="color-circle c1"></div>
+                        <span class="color-label">пудровый</span>
+                    </div>
+                    <div class="palette-item">
+                        <div class="color-circle c2"></div>
+                        <span class="color-label">бежевый</span>
+                    </div>
+                    <div class="palette-item">
+                        <div class="color-circle c3"></div>
+                        <span class="color-label">кремовый</span>
+                    </div>
+                </div>
+                <!-- Второй ряд: 1 цвет по центру -->
+                <div class="palette-row">
+                    <div class="palette-item">
+                        <div class="color-circle c4"></div>
+                        <span class="color-label">светло-коричневый</span>
+                    </div>
+                </div>
+            </div>
         </section>
 
+        <!-- БЛОК 6: ПОЖЕЛАНИЯ -->
         <section class="wishes-section">
             <h2 class="wishes-title">Пожелания</h2>
-            <p class="wishes-text">Ваше присутствие — самый ценный подарок. Если вы захотите порадовать нас, будем благодарны за конверт с тёплыми пожеланиями на нашем общем пути.</p>
-            <p class="wishes-text">Просим вас не дарить нам цветы — мы не успеем насладиться их красотой до отъезда. А вот бутылочке вина для нашей семейной винотеки будем очень рады!</p>
+            <p class="wishes-text">
+                Ваше присутствие — самый ценный подарок. Если вы захотите порадовать нас, будем благодарны за конверт с тёплыми пожеланиями на нашем общем пути.
+            </p>
+            <p class="wishes-text">
+                Просим вас не дарить нам цветы — мы не успеем насладиться их красотой до отъезда. А вот бутылочке вина для нашей семейной винотеки будем очень рады!
+            </p>
             <div class="wishes-divider"></div>
         </section>
 
+        <!-- БЛОК 7: АНКЕТА ГОСТЯ -->
         <section class="survey-section">
             <h2 class="survey-title">Анкета гостя</h2>
             <p class="survey-subtitle">Пожалуйста, подтвердите присутствие до <strong>31.05</strong> и укажите ваши предпочтения, чтобы мы могли учесть все детали.</p>
+
             <form class="survey-form" id="guest-survey" action="https://formspree.io/f/mdajoylk" method="POST">
-                <div class="form-group"><label class="form-label">Имя и Фамилия</label><input type="text" name="name" class="form-input" placeholder="Введите ваше полное имя" required></div>
-                <div class="form-group"><label class="form-label">Сможете ли вы присутствовать?</label><div class="radio-group"><label class="radio-item"><input type="radio" name="attendance" value="yes" required><span class="radio-label">Да, с радостью</span></label><label class="radio-item"><input type="radio" name="attendance" value="no"><span class="radio-label">К сожалению, нет</span></label><label class="radio-item"><input type="radio" name="attendance" value="maybe"><span class="radio-label">Пока не уверен(а)</span></label></div></div>
-                <div class="form-group"><label class="form-label">Предпочтения по напиткам</label><div class="checkbox-group"><label class="checkbox-item"><input type="checkbox" name="drink" value="red_wine"><span class="checkbox-label">Вино красное</span></label><label class="checkbox-item"><input type="checkbox" name="drink" value="white_wine"><span class="checkbox-label">Вино белое</span></label><label class="checkbox-item"><input type="checkbox" name="drink" value="champagne"><span class="checkbox-label">Шампанское</span></label><label class="checkbox-item"><input type="checkbox" name="drink" value="whiskey"><span class="checkbox-label">Виски</span></label><label class="checkbox-item"><input type="checkbox" name="drink" value="cognac"><span class="checkbox-label">Коньяк</span></label><label class="checkbox-item"><input type="checkbox" name="drink" value="vodka"><span class="checkbox-label">Водка</span></label><label class="checkbox-item"><input type="checkbox" name="drink" value="soft"><span class="checkbox-label">Безалкогольное</span></label></div></div>
+                <div class="form-group">
+                    <label class="form-label">Имя и Фамилия</label>
+                    <input type="text" name="name" class="form-input" placeholder="Введите ваше полное имя" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Сможете ли вы присутствовать?</label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="attendance" value="yes" required>
+                            <span class="radio-label">Да, с радостью</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="attendance" value="no">
+                            <span class="radio-label">К сожалению, нет</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="attendance" value="maybe">
+                            <span class="radio-label">Пока не уверен(а)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Предпочтения по напиткам</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="drink" value="red_wine">
+                            <span class="checkbox-label">Вино красное</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="drink" value="white_wine">
+                            <span class="checkbox-label">Вино белое</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="drink" value="champagne">
+                            <span class="checkbox-label">Шампанское</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="drink" value="whiskey">
+                            <span class="checkbox-label">Виски</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="drink" value="cognac">
+                            <span class="checkbox-label">Коньяк</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="drink" value="vodka">
+                            <span class="checkbox-label">Водка</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="drink" value="soft">
+                            <span class="checkbox-label">Безалкогольное</span>
+                        </label>
+                    </div>
+                </div>
+
                 <button type="submit" class="submit-button">Отправить</button>
             </form>
         </section>
 
+        <!-- БЛОК 8: ТАЙМЕР -->
         <section class="countdown-section">
             <h2 class="countdown-title">До свадьбы осталось</h2>
-            <p class="countdown-subtitle">Мы с нетерпением ждём этот день и будем рады видеть каждого из вас на нашем празднике</p>
-            <div class="countdown-timer" id="countdown"><div class="countdown-item"><span class="countdown-number" id="days">00</span><span class="countdown-label">дн</span></div><span class="countdown-separator">:</span><div class="countdown-item"><span class="countdown-number" id="hours">00</span><span class="countdown-label">ч</span></div><span class="countdown-separator">:</span><div class="countdown-item"><span class="countdown-number" id="minutes">00</span><span class="countdown-label">мин</span></div><span class="countdown-separator">:</span><div class="countdown-item"><span class="countdown-number" id="seconds">00</span><span class="countdown-label">сек</span></div></div>
+            <p class="countdown-subtitle">
+                Мы с нетерпением ждём этот день и будем рады видеть каждого из вас на нашем празднике
+            </p>
+
+            <div class="countdown-timer" id="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="days">00</span>
+                    <span class="countdown-label">дн</span>
+                </div>
+                <span class="countdown-separator">:</span>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">00</span>
+                    <span class="countdown-label">ч</span>
+                </div>
+                <span class="countdown-separator">:</span>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">00</span>
+                    <span class="countdown-label">мин</span>
+                </div>
+                <span class="countdown-separator">:</span>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="seconds">00</span>
+                    <span class="countdown-label">сек</span>
+                </div>
+            </div>
+
             <p class="countdown-message">ждём вас</p>
         </section>
 
+        <!-- БЛОК 9: КОНТАКТЫ -->
         <section class="contacts-section">
             <h2 class="contacts-title">Контакты</h2>
-            <div class="contacts-photo-wrapper"><img src="пара2.png" alt="Дмитрий и Юлия" class="contacts-photo"></div>
-            <div class="contacts-info"><div class="contact-item">Невеста: <a href="tel:+79110940605">+7 (911) 094-06-05</a></div><div class="contact-item">Жених: <a href="tel:+79510999230">+7 (951) 099-92-30</a></div></div>
-            <p class="contacts-note">Также мы создали телеграм-чат, где можно будет поделиться всем, чем захочется</p>
+            
+            <div class="contacts-photo-wrapper">
+                <img src="пара2.png" alt="Дмитрий и Юлия" class="contacts-photo">
+            </div>
+            
+            <div class="contacts-info">
+                <div class="contact-item">
+                    Невеста: <a href="tel:+79110940605">+7 (911) 094-06-05</a>
+                </div>
+                <div class="contact-item">
+                    Жених: <a href="tel:+79510999230">+7 (951) 099-92-30</a>
+                </div>
+            </div>
+
+            <p class="contacts-note">
+                Также мы создали телеграм-чат, где можно будет поделиться всем, чем захочется
+            </p>
             <a href="https://t.me/+piakagHEMr83MGJi" target="_blank" class="telegram-link">Присоединиться в Telegram</a>
-            <p class="contacts-note" style="margin-top: 25px;">Мы искренне ждём вас и верим, что этот день станет по-настоящему особенным</p>
+
+            <p class="contacts-note" style="margin-top: 25px;">
+                Мы искренне ждём вас и верим, что этот день станет по-настоящему особенным
+            </p>
         </section>
+
     </main>
 
     <script>
@@ -1465,7 +1742,7 @@
             const openBtn = document.getElementById('open-btn');
             const envelopeOverlay = document.getElementById('envelope-overlay');
             const mainContent = document.getElementById('main-content');
-            const lightScreen = document.getElementById('light-screen');
+            const blackScreen = document.getElementById('black-screen');
             const particlesContainer = document.getElementById('particles');
             const bgMusic = document.getElementById('bg-music');
             const musicToggle = document.getElementById('music-toggle');
@@ -1474,10 +1751,11 @@
             let musicStarted = false;
 
             function createParticles() {
-                for (let i = 0; i < 80; i++) {
+                const particleCount = 40;
+                for (let i = 0; i < particleCount; i++) {
                     const particle = document.createElement('div');
                     particle.className = 'particle';
-                    const size = Math.random() * 8 + 3;
+                    const size = Math.random() * 5 + 2;
                     particle.style.width = size + 'px';
                     particle.style.height = size + 'px';
                     particle.style.left = Math.random() * 100 + '%';
@@ -1486,17 +1764,20 @@
                 }
             }
 
+            createParticles();
+
             function animateParticles() {
                 const particles = document.querySelectorAll('.particle');
                 particles.forEach((particle) => {
-                    const delay = Math.random() * 1.5;
-                    const duration = Math.random() * 2 + 1.5;
+                    const delay = Math.random() * 3;
+                    const duration = Math.random() * 3 + 2;
                     particle.style.animation = `sparkle ${duration}s ease-out ${delay}s forwards`;
+                    setTimeout(() => {
+                        particle.style.animation = 'none';
+                    }, (delay + duration) * 1000);
                 });
-                setTimeout(() => { particlesContainer.classList.remove('active'); }, 4500);
             }
 
-            // Функция смены иконок плеера (черный фон, белые иконки)
             function updateMusicUI() {
                 if (bgMusic.paused) {
                     musicToggle.classList.add('paused');
@@ -1507,6 +1788,7 @@
                 }
             }
 
+            // Кнопка паузы/воспроизведения
             musicToggle.addEventListener('click', () => {
                 if (bgMusic.paused) {
                     bgMusic.play().then(() => {
@@ -1518,29 +1800,32 @@
                 }
             });
 
-            // Устанавливаем начальное состояние (пауза)
-            updateMusicUI();
-
             openBtn.addEventListener('click', () => {
                 const img = openBtn.querySelector('img');
-                if (img) img.style.transform = 'rotate(360deg) scale(0.8)';
-                
-                particlesContainer.classList.add('active');
-                createParticles();
+                if (img) {
+                    img.style.transform = 'rotate(360deg) scale(0.8)';
+                }
                 animateParticles();
 
+                // Запускаем музыку при первом клике
                 if (!musicStarted && bgMusic) {
-                    bgMusic.play().then(() => { 
-                        musicStarted = true; 
-                        updateMusicUI(); 
-                    }).catch(e => console.log('Ожидание взаимодействия:', e));
+                    bgMusic.play().then(() => {
+                        musicStarted = true;
+                        updateMusicUI();
+                    }).catch(e => console.log('Ожидание взаимодействия для музыки:', e));
                     bgMusic.volume = 0.4;
                 }
 
-                setTimeout(() => envelopeOverlay.classList.add('fading'), 300);
-                setTimeout(() => lightScreen.classList.add('active'), 600);
-                setTimeout(() => { lightScreen.classList.add('fade-out'); mainContent.classList.add('visible'); }, 1800);
-                setTimeout(() => { envelopeOverlay.style.display = 'none'; lightScreen.classList.remove('active', 'fade-out'); }, 4000);
+                setTimeout(() => { envelopeOverlay.classList.add('fading'); }, 300);
+                setTimeout(() => { blackScreen.classList.add('active'); }, 600);
+                setTimeout(() => {
+                    blackScreen.classList.add('fade-out');
+                    mainContent.classList.add('visible');
+                }, 1800);
+                setTimeout(() => {
+                    envelopeOverlay.style.display = 'none';
+                    blackScreen.classList.remove('active', 'fade-out');
+                }, 4000);
             });
 
             const hero = document.querySelector('.hero');
@@ -1548,50 +1833,90 @@
             
             const mainObserver = new MutationObserver(() => {
                 if (mainContent.classList.contains('visible')) {
-                    setTimeout(() => hero.classList.add('visible'), 200);
-                    setTimeout(() => details.classList.add('visible'), 800);
+                    setTimeout(() => { hero.classList.add('visible'); }, 200);
+                    setTimeout(() => { details.classList.add('visible'); }, 800);
                     mainObserver.disconnect();
                 }
             });
+            
             mainObserver.observe(mainContent, { attributes: true, attributeFilter: ['class'] });
 
             const timelineObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.querySelectorAll('.timeline-item').forEach((item, i) => setTimeout(() => item.classList.add('show'), i * 200));
-                        timelineObserver.unobserve(entry.target);
+                        const items = entry.target.querySelectorAll('.timeline-item');
+                        items.forEach((item, index) => {
+                            setTimeout(() => {
+                                item.classList.add('show');
+                            }, index * 200);
+                        });
                     }
                 });
             }, { threshold: 0.2 });
-            document.querySelector('.timeline-section') && timelineObserver.observe(document.querySelector('.timeline-section'));
+
+            const timelineSection = document.querySelector('.timeline-section');
+            if (timelineSection) {
+                timelineObserver.observe(timelineSection);
+            }
 
             const sectionObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); sectionObserver.unobserve(entry.target); } });
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
             }, { threshold: 0.15 });
-            document.querySelectorAll('.location-section, .dresscode-section, .wishes-section, .survey-section, .countdown-section, .contacts-section').forEach(s => sectionObserver.observe(s));
 
-            document.getElementById('guest-survey')?.addEventListener('submit', (e) => {
-                const btn = e.target.querySelector('.submit-button');
-                btn.textContent = 'Отправлено';
-                btn.classList.add('submitted');
-                setTimeout(() => { btn.textContent = 'Отправить'; btn.classList.remove('submitted'); }, 3000);
+            document.querySelectorAll('.location-section, .dresscode-section, .wishes-section, .survey-section, .countdown-section, .contacts-section').forEach(section => {
+                sectionObserver.observe(section);
             });
+
+            const surveyForm = document.getElementById('guest-survey');
+            if (surveyForm) {
+                surveyForm.addEventListener('submit', (e) => {
+                    const button = surveyForm.querySelector('.submit-button');
+                    button.textContent = 'Отправлено';
+                    button.classList.add('submitted');
+                    setTimeout(() => {
+                        button.textContent = 'Отправить';
+                        button.classList.remove('submitted');
+                    }, 3000);
+                });
+            }
 
             function updateCountdown() {
                 const weddingDate = new Date('2026-07-19T12:20:00');
-                const diff = weddingDate - new Date();
+                const now = new Date();
+                const diff = weddingDate - now;
+
                 if (diff <= 0) {
-                    ['days','hours','minutes','seconds'].forEach(id => document.getElementById(id).textContent = '00');
+                    document.getElementById('days').textContent = '00';
+                    document.getElementById('hours').textContent = '00';
+                    document.getElementById('minutes').textContent = '00';
+                    document.getElementById('seconds').textContent = '00';
                     document.querySelector('.countdown-message').textContent = 'сегодня';
                     return;
                 }
-                document.getElementById('days').textContent = String(Math.floor(diff / (1000*60*60*24))).padStart(2,'0');
-                document.getElementById('hours').textContent = String(Math.floor((diff % (1000*60*60*24)) / (1000*60*60))).padStart(2,'0');
-                document.getElementById('minutes').textContent = String(Math.floor((diff % (1000*60*60)) / (1000*60))).padStart(2,'0');
-                document.getElementById('seconds').textContent = String(Math.floor((diff % (1000*60)) / 1000)).padStart(2,'0');
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = String(days).padStart(2, '0');
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
             }
+
             updateCountdown();
             setInterval(updateCountdown, 1000);
+
+            setInterval(() => {
+                if (mainContent.classList.contains('visible')) {
+                    animateParticles();
+                }
+            }, 12000);
         });
     </script>
 </body>
