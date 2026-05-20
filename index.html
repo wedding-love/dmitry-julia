@@ -134,9 +134,10 @@
             opacity: 1;
         }
 
-        /* ========== БЛОК 1: ГЕРОЙ (ФОТО БЕЗ ПЛЁНКИ И БЕЗ ОБВОДКИ) ========== */
+        /* ========== БЛОК 1: ГЕРОЙ - ровно на один экран ========== */
         .hero {
             height: 100vh;
+            width: 100%;
             display: flex;
             position: relative;
             background: url('молодые.jpg') center/cover no-repeat;
@@ -155,15 +156,15 @@
             bottom: 60px;
             left: 40px;
             text-align: left;
-            /* Убираем фон и обводку */
             background: transparent;
             padding: 0;
             border-radius: 0;
         }
 
         .hero-names {
+            font-family: 'Montserrat', sans-serif;
             font-size: clamp(24px, 5vw, 48px);
-            font-weight: 400;
+            font-weight: 200;
             letter-spacing: 4px;
             text-transform: uppercase;
             margin-bottom: 10px;
@@ -172,14 +173,15 @@
         }
 
         .hero-date {
+            font-family: 'Montserrat', sans-serif;
             font-size: 16px;
             letter-spacing: 6px;
-            font-weight: 400;
+            font-weight: 200;
             color: var(--gold);
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            text-shadow: 0.5px 0.5px 2px rgba(0,0,0,0.2);
         }
 
-        /* ========== КНОПКА МУЗЫКИ ========== */
+        /* ========== КНОПКА МУЗЫКИ (всегда чёрная) ========== */
         .music-control-wrapper {
             display: flex;
             flex-direction: column;
@@ -191,7 +193,7 @@
 
         .music-toggle {
             background: transparent;
-            border: 1px solid var(--gold);
+            border: 1px solid var(--dark-text);
             color: var(--dark-text);
             width: 48px;
             height: 48px;
@@ -212,7 +214,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: var(--gold);
+            background: var(--dark-text);
             transition: left 0.4s ease;
             z-index: -1;
             border-radius: 50%;
@@ -224,7 +226,7 @@
 
         .music-toggle:hover {
             color: var(--light-bg);
-            box-shadow: 0 0 25px rgba(201, 169, 110, 0.4);
+            box-shadow: 0 0 25px rgba(26, 26, 26, 0.3);
         }
 
         .music-toggle svg {
@@ -1422,7 +1424,7 @@
     <!-- ========== ОСНОВНОЙ КОНТЕНТ ========== -->
     <main id="main-content">
 
-        <!-- БЛОК 1: ГЕРОЙ (ФОТО БЕЗ ПЛЁНКИ, ТЕКСТ БЕЗ ОБВОДКИ) -->
+        <!-- БЛОК 1: ГЕРОЙ (ровно на один экран) -->
         <section class="hero">
             <div class="hero-info">
                 <h1 class="hero-names">Дмитрий & Юлия</h1>
@@ -1430,7 +1432,7 @@
             </div>
         </section>
 
-        <!-- КНОПКА УПРАВЛЕНИЯ МУЗЫКОЙ -->
+        <!-- КНОПКА УПРАВЛЕНИЯ МУЗЫКОЙ (всегда чёрная) -->
         <div class="music-control-wrapper">
             <button id="music-toggle" class="music-toggle" title="Пауза / Воспроизвести">
                 <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor">
